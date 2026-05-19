@@ -1,4 +1,4 @@
-```yaml id="vg2nd7"
+
 name: CI/CD Pipeline
 
 on:
@@ -19,4 +19,3 @@ jobs:
 
       - name: Deployment Success
         run: echo "Portfolio deployed successfully!"
-```

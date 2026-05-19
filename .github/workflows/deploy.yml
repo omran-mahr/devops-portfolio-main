@@ -1,0 +1,23 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Build Docker Image
+      run: docker build -t devops-portfolio .
+
+    - name: Run Container
+      run: |
+        docker stop portfolio || true
+        docker rm portfolio || true
+        docker run -d -p 80:80 --name portfolio devops-portfolio

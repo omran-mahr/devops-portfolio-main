@@ -1,4 +1,3 @@
-
 name: CI/CD Pipeline
 
 on:
@@ -7,15 +6,23 @@ on:
       - main
 
 jobs:
-  build-and-run:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-      - name: Verify Portfolio Files
-        run: ls
+    - name: Install Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
 
-      - name: Deployment Success
-        run: echo "Portfolio deployed successfully!"
+    - name: Install Netlify CLI
+      run: npm install -g netlify-cli
+
+    - name: Deploy to Netlify
+      run: netlify deploy --prod --dir=.
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
